@@ -1,17 +1,3 @@
-# coding=utf-8
-# Copyright 2023 The HuggingFace Team. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 import os
 from pathlib import Path
 from typing import Dict, Union
@@ -21,9 +7,6 @@ from transformers import AutoTokenizer, BitsAndBytesConfig, PreTrainedTokenizer
 from transformers.trainer_utils import get_last_checkpoint
 
 from accelerate import Accelerator
-# from huggingface_hub import list_repo_files
-# from huggingface_hub.utils._errors import RepositoryNotFoundError
-# from huggingface_hub.utils._validators import HFValidationError
 from peft import LoraConfig, PeftConfig
 
 from .configs import DataArguments, DPOConfig, ModelArguments, SFTConfig
@@ -106,17 +89,6 @@ def get_peft_config(model_args: ModelArguments) -> Union[PeftConfig, None]:
     )
 
     return peft_config
-
-
-# def is_adapter_model(model_name_or_path: str, revision: str = "main") -> bool:
-#     try:
-#         # Try first if model on a Hub repo
-#         repo_files = list_repo_files(model_name_or_path, revision=revision)
-#     except (HFValidationError, RepositoryNotFoundError):
-#         # If not, check local repo
-#         repo_files = os.listdir(model_name_or_path)
-#     return "adapter_model.safetensors" in repo_files or "adapter_model.bin" in repo_files
-
 
 def get_checkpoint(training_args: Union[SFTConfig, DPOConfig]) -> Union[Path, None]:
     last_checkpoint = None
